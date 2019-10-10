@@ -1,11 +1,11 @@
-//moidify correct 
+//错误修改
 
 1.git pull --rebase https://github.com/AkaOld/GymClub.git master
 2.git add .
 3.git push https://github.com/AkaOld/GymClub.git master
 
 
-//how to push file to github
+//上传文件
 1.git status
 2.git add *
 3.git commit -m 'first_commit'
