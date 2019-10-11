@@ -1,0 +1,41 @@
+yarn的伪分布式
+$cd /opt/module/hadoop
+$cd etc/hadoop
+
+vim yarn-env.sh
+在yarn-env.sh 内编辑
+export JAVA_HOME=/opt/module/jdk
+
+编辑vim yarn-site.xml
+<property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+    <property>
+        <name>yarn.resourcemanager.hostname</name>
+        <value>master</value>
+</property>
+
+编辑vim mapred-env.sh
+export JAVA_HOME=/opt/module/jdk
+
+cp mapred-site.xml.template mapred-site.xml
+编辑vim mapred-site.xml
+<property>
+<name>mapreduce.framework.name</name>
+<value>yarn</value>
+</property>
+
+启动yarn
+返回/opt/module/hadoop
+yarn-daemon.sh start resourcemanager
+yarn-daemon.sh start nodemanager
+
+跑在本地hdfs上的mapreduce 程序
+hdfs dfs -put wcinput /
+hdfs dfs -ls /
+(可在hadoop：50070上查看)
+hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.3.jar wordcount /wcinput /wcoutput
+hdfs dfs -cat /wcoutput/*
+
+
