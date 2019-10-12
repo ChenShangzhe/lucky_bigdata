@@ -1,0 +1,51 @@
+集群分布配置
+
+编辑vim /opt/module/hadooop/etc/hadoop/core-site.xml
+<property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://master:9000</value>
+</property>
+
+<property>
+        <name>hadoop.tmp.dir</name>
+        <value>/opt/module/hadoop/data/tmp</value>
+    </property>
+
+
+编辑vim /opt/module/hadooop/etc/hadoop/hdfs-site.xml
+<propety>
+	<name>dfs.namenode.secondary.http-address</name>
+	<value>slave1:50090</value>
+</propety>
+
+
+
+编辑vim /opt/module/hadooop/etc/hadoop/yarn-site.xml
+ <property> 
+        <name>yarn.resourcemanager.hostname</name>
+        <value>slave1</value>
+ </property>
+ 
+ 
+ 分发文件
+ scp -r /opt/module/jdk root@slave1:/opt/module
+ scp -r /opt/module/jdk root@slave2:/opt/module
+ scp -r /opt/module/hadoop root@slave1:/opt/module
+ scp -r /opt/module/hadoop root@slave2:/opt/module
+ scp -r /etc/profile root@slave1:/etc/profile
+ scp -r /etc/profile root@slave2:/etc/profile
+ 
+ source /etc/profile
+ 
+ 
+分发结束之后
+	初始化namenode
+	hdfs namenode -fomat
+	master启动namenode
+	hadoop-daemon.sh start namenode
+	slave1 slave2 启动datanode
+	hadoop-daemon.sh start datanode
+	slave1启动secondarynamenode
+	hadoop-daemon.sh start secondarynamenode
+	
+	
